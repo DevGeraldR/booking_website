@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function Book() {
+function BookSchedule() {
   return (
     <div className="flex bg-[#87ab69]">
       <div className="flex w-full h-[500px] flex-col justify-between py-20 items-center bg-[#87ab69]">
@@ -16,4 +16,4 @@ function Book() {
   );
 }
 
-export default Book;
+export default BookSchedule;

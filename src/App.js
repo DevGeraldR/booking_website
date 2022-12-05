@@ -1,14 +1,18 @@
 import React from "react";
-import Welcome from "./pages/Welcome";
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import BookSchedule from "./components/Book/BookSchedule";
+import ChooseDate from "./pages/ChooseDate";
+import Form from "./pages/Form";
+import Reciept from "./pages/Reciept";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/book_schedule" element={<BookSchedule />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/book_schedule" element={<ChooseDate />} />
+        <Route path="/input_information" element={<Form />} />
+        <Route path="/receipt" element={<Reciept />} />
       </Routes>
     </Router>
   );

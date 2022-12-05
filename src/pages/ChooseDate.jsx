@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
 import React, { useState } from "react";
-import { generateDate, months } from "./util/calendar";
-import cn from "./util/cn";
+import { generateDate, months } from "../components/Book/calendar";
+import cn from "../components/Book/cn";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
-export default function BookSchedule() {
+export default function ChooseDate() {
   const days = ["S", "M", "T", "W", "T", "F", "S"];
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
@@ -87,7 +88,9 @@ export default function BookSchedule() {
           Open Schedule for {selectDate.toDate().toDateString()}
         </h1>
         <p className="text-gray-400">Fully Booked</p>
-        <button className="bg-black text-white p-2">Book Now</button>
+        <Link to="/input_information">
+          <button className="bg-black text-white p-2">Book Now</button>
+        </Link>
       </div>
     </div>
   );
