@@ -1,15 +1,15 @@
-import dayjs from "dayjs";
 import React, { useState } from "react";
 import { generateDate, months } from "../components/Book/calendar";
 import cn from "../components/Book/cn";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import { useGlobal } from "../components/Context/Context";
 
 export default function ChooseDate() {
+  const { setSelectedTime, currentDate } = useGlobal();
   const days = ["S", "M", "T", "W", "T", "F", "S"];
-  const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
-  const [selectDate, setSelectDate] = useState(currentDate);
+  const { selectedDate, setSelectedDate } = useGlobal();
   return (
     <div className="flex gap-10 sm:divide-x justify-center sm:w-1/2 mx-auto  h-screen items-center sm:flex-row flex-col">
       <div className="w-96 h-96 ">
@@ -65,14 +65,14 @@ export default function ChooseDate() {
                     className={cn(
                       currentMonth ? "" : "text-gray-400",
                       today ? "bg-red-600 text-white" : "",
-                      selectDate.toDate().toDateString() ===
+                      selectedDate.toDate().toDateString() ===
                         date.toDate().toDateString()
                         ? "bg-black text-white"
                         : "",
                       "h-10 w-10 rounded-full grid place-content-center hover:bg-black hover:text-white transition-all cursor-pointer select-none"
                     )}
                     onClick={() => {
-                      setSelectDate(date);
+                      setSelectedDate(date);
                     }}
                   >
                     {date.date()}
@@ -83,11 +83,57 @@ export default function ChooseDate() {
           )}
         </div>
       </div>
-      <div className="h-96 w-96 sm:px-5">
+      <div
+        className="h-96 w-96 sm:px-5"
+        onChange={(e) => {
+          setSelectedTime(e.target.value);
+        }}
+      >
         <h1 className=" font-semibold">
-          Open Schedule for {selectDate.toDate().toDateString()}
+          Available Schedule for {selectedDate.toDate().toDateString()}
         </h1>
-        <p className="text-gray-400">Fully Booked</p>
+        <div className="flex flex-col gap-2 my-3">
+          <div>
+            <input type="radio" value="05:00 AM - 11:30 AM" name="time" /> 05:00
+            AM - 11:30 AM
+          </div>
+          <div>
+            <input type="radio" value="05:30 AM - 11:05" name="time" /> 05:30 AM
+            - 11:05 AM
+          </div>
+          <div>
+            <input type="radio" value="06:00 AM - 12:35 AM" name="time" /> 06:00
+            AM - 12:35 AM
+          </div>
+          <div>
+            <input type="radio" value="07:00 AM - 01:35 AM" name="time" /> 07:00
+            AM - 01:35 AM
+          </div>
+          <div>
+            <input type="radio" value="07:00 AM - 01:05 AM" name="time" /> 07:00
+            AM - 01:05 AM
+          </div>
+          <div>
+            <input type="radio" value="08:00 AM - 02:35 AM" name="time" /> 08:00
+            AM - 02:35 AM
+          </div>
+          <div>
+            <input type="radio" value="08:30 AM - 02:05 AM" name="time" /> 08:30
+            AM - 02:05 AM
+          </div>
+          <div>
+            <input type="radio" value="09:00 AM - 03:35 AM" name="time" /> 09:00
+            AM - 03:35 AM
+          </div>
+          <div>
+            <input type="radio" value="09:30 AM - 03:05 AM" name="time" /> 09:30
+            AM - 03:05 AM
+          </div>
+          <div>
+            <input type="radio" value="10:00 AM - 04:35 AM" name="time" /> 10:00
+            AM - 04:35 AM
+          </div>
+        </div>
         <Link to="/input_information">
           <button className="bg-black text-white p-2">Book Now</button>
         </Link>

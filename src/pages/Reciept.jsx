@@ -1,6 +1,11 @@
 import React from "react";
-
+import { useGlobal } from "../components/Context/Context";
+import { v4 as uuid } from "uuid";
 function Reciept() {
+  const { selectedTime, selectedDate, currentDate, visitors } = useGlobal();
+  const randomId = uuid();
+  const transitionId = randomId.slice(0, 8);
+  let total = 0;
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-3/5 bg-white shadow-lg">
@@ -9,8 +14,8 @@ function Reciept() {
             <h1 className="text-3xl italic font-extrabold tracking-widest text-green-900">
               MPPMNGPL
             </h1>
-            <p className="text-base">TRANSACTION ID #4</p>
-            <p className="text-base">12/10/2022 10:30 pm</p>
+            <p className="text-base">TRANSACTION ID #: {transitionId}</p>
+            <p className="text-base">{currentDate.toString()}</p>
           </div>
         </div>
         <div className="w-full h-0.5 bg-green-900"></div>
@@ -18,10 +23,13 @@ function Reciept() {
           <div>
             <h6 className="font-bold">
               Book Date :
-              <span className="text-sm font-medium"> 12/12/2022</span>
+              <span className="pl-2 text-sm font-medium">
+                {selectedDate.toDate().toDateString()}
+              </span>
             </h6>
             <h6 className="font-bold">
-              Book Time : <span className="text-sm font-medium"> 12:30</span>
+              Book Time :
+              <span className="pl-2 text-sm font-medium">{selectedTime}</span>
             </h6>
           </div>
         </div>
@@ -45,14 +53,37 @@ function Reciept() {
                 </tr>
               </thead>
               <tbody className="bg-white">
-                <tr className="whitespace-nowrap">
-                  <td className="px-2 md:px-6 py-4 text-sm text-gray-500">1</td>
-                  <td className="px-2 md:px-6 py-4">
-                    <div className="text-sm text-gray-900">Customer 1</div>
-                  </td>
-                  <td className="px-2 md:px-6 py-4">Filipino</td>
-                  <td className="px-2 md:px-6 py-4">₱150.00</td>
-                </tr>
+                {visitors.map((value, index) => {
+                  let price;
+                  if (value.citezenship === "Filipino") {
+                    if (value.age <= 6) {
+                      price = 120;
+                    } else if (value.age >= 7 && value.age <= 18) {
+                      price = 100;
+                    } else if (value.age >= 19 && value.age <= 59) {
+                      price = 150;
+                    } else {
+                      price = 120;
+                    }
+                  } else {
+                    price = 300;
+                  }
+                  total += price;
+                  return (
+                    <tr className="whitespace-nowrap" key={index}>
+                      <td className="px-2 md:px-6 py-4 text-sm text-gray-500">
+                        {index + 1}
+                      </td>
+                      <td className="px-2 md:px-6 py-4">
+                        <div className="text-sm text-gray-900">
+                          {value.fullName}
+                        </div>
+                      </td>
+                      <td className="px-2 md:px-6 py-4">{value.citezenship}</td>
+                      <td className="px-2 md:px-6 py-4">₱{price}</td>
+                    </tr>
+                  );
+                })}
 
                 <tr className="text-white bg-gray-800">
                   <th colSpan="2"></th>
@@ -60,7 +91,7 @@ function Reciept() {
                     <b>Total</b>
                   </td>
                   <td className="text-sm font-bold">
-                    <b>$999.0</b>
+                    <b>₱{total}</b>
                   </td>
                 </tr>
               </tbody>
