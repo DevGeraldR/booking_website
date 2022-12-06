@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <header
       className={`${
-        bg ? "bg-green-900 h-20" : "h-24"
+        bg ? "bg-[#354a21] h-20" : "h-24"
       } text-white flex items-center fixed top-0 w-full z-10 transition-all duration-300`}
     >
       <div className="mx-20 h-full w-full flex items-center justify-between">

@@ -107,7 +107,7 @@ export default function ChooseDate() {
                   <h1
                     className={cn(
                       currentMonth ? "" : "text-gray-400",
-                      today ? "bg-red-600 text-white" : "",
+                      today ? "bg-blue-600 text-white" : "",
                       selectedDate.toDate().toDateString() ===
                         date.toDate().toDateString()
                         ? "bg-black text-white"
@@ -164,9 +164,9 @@ export default function ChooseDate() {
             selectedDate.day() === 1 ||
             selectedDate.day() === 2 ||
             !selectedTime
-              ? "bg-gray-400"
-              : "bg-black"
-          } text-white p-2`}
+              ? "bg-gray-100 text-gray-900 hover:bg-gray-200"
+              : "bg-blue-100 text-blue-900 hover:bg-blue-200"
+          } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
         >
           Book Now
         </button>
