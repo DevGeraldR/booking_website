@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import { generateDate, months } from "../components/Book/calendar";
 import cn from "../components/Book/cn";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import { Link } from "react-router-dom";
 import { useGlobal } from "../components/Context/Context";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../components/firebase/firebase";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ChooseDate() {
-  const { setSelectedTime, currentDate } = useGlobal();
+  const { selectedTime, setSelectedTime, currentDate } = useGlobal();
   const days = ["S", "M", "T", "W", "T", "F", "S"];
   const [today, setToday] = useState(currentDate);
   const { selectedDate, setSelectedDate } = useGlobal();
   const [scheduleTime, setScheduleTime] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -115,6 +116,7 @@ export default function ChooseDate() {
                     )}
                     onClick={() => {
                       setSelectedDate(date);
+                      setSelectedTime("");
                     }}
                   >
                     {date.date()}
@@ -135,7 +137,10 @@ export default function ChooseDate() {
           Available Schedule for {selectedDate.toDate().toDateString()}
         </h1>
         <div className="flex flex-col gap-2 my-3">
-          {!isLoading ? (
+          {/* 1 for monday 2 for tuesday */}
+          {selectedDate.day() === 1 || selectedDate.day() === 2 ? (
+            <div>Sorry no booking beetween monday and tuesday</div>
+          ) : !isLoading ? (
             scheduleTime.map((time, index) => {
               return (
                 <div key={index}>
@@ -148,10 +153,23 @@ export default function ChooseDate() {
             <div>Please wait...</div>
           )}
         </div>
-
-        <Link to="/input_information">
-          <button className="bg-black text-white p-2">Book Now</button>
-        </Link>
+        <button
+          onClick={() => navigate("/input_information")}
+          disabled={
+            selectedDate.day() === 1 ||
+            selectedDate.day() === 2 ||
+            !selectedTime
+          }
+          className={`${
+            selectedDate.day() === 1 ||
+            selectedDate.day() === 2 ||
+            !selectedTime
+              ? "bg-gray-400"
+              : "bg-black"
+          } text-white p-2`}
+        >
+          Book Now
+        </button>
       </div>
     </div>
   );
