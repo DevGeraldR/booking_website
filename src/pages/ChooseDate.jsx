@@ -4,12 +4,54 @@ import cn from "../components/Book/cn";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { useGlobal } from "../components/Context/Context";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../components/firebase/firebase";
+import { useEffect } from "react";
 
 export default function ChooseDate() {
   const { setSelectedTime, currentDate } = useGlobal();
   const days = ["S", "M", "T", "W", "T", "F", "S"];
   const [today, setToday] = useState(currentDate);
   const { selectedDate, setSelectedDate } = useGlobal();
+  const [scheduleTime, setScheduleTime] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timeRef = collection(
+      db,
+      "bookDetails",
+      selectedDate.toDate().toDateString(),
+      "bookTime"
+    );
+    const unsub = onSnapshot(timeRef, (snapshot) => {
+      const schedule = [
+        "05:00 AM - 11:30 AM",
+        "05:30 AM - 11:05 AM",
+        "06:00 AM - 12:35 AM",
+        "07:00 AM - 01:35 AM",
+        "07:00 AM - 01:05 AM",
+        "08:00 AM - 02:35 AM",
+        "08:30 AM - 02:05 AM",
+        "09:00 AM - 03:35 AM",
+        "09:30 AM - 03:05 AM",
+        "10:00 AM - 04:35 AM",
+      ];
+      snapshot.forEach((doc) => {
+        const { time, visitorsNumber } = doc.data();
+        if (visitorsNumber >= 10) {
+          const index = schedule.indexOf(time);
+          if (index > -1) {
+            schedule.splice(index, 1);
+          }
+        }
+      });
+      setScheduleTime(schedule);
+      setIsLoading(false);
+    });
+    return () => unsub();
+  }, [selectedDate]);
+
   return (
     <div className="flex gap-10 sm:divide-x justify-center sm:w-1/2 mx-auto  h-screen items-center sm:flex-row flex-col">
       <div className="w-96 h-96 ">
@@ -93,47 +135,20 @@ export default function ChooseDate() {
           Available Schedule for {selectedDate.toDate().toDateString()}
         </h1>
         <div className="flex flex-col gap-2 my-3">
-          <div>
-            <input type="radio" value="05:00 AM - 11:30 AM" name="time" /> 05:00
-            AM - 11:30 AM
-          </div>
-          <div>
-            <input type="radio" value="05:30 AM - 11:05" name="time" /> 05:30 AM
-            - 11:05 AM
-          </div>
-          <div>
-            <input type="radio" value="06:00 AM - 12:35 AM" name="time" /> 06:00
-            AM - 12:35 AM
-          </div>
-          <div>
-            <input type="radio" value="07:00 AM - 01:35 AM" name="time" /> 07:00
-            AM - 01:35 AM
-          </div>
-          <div>
-            <input type="radio" value="07:00 AM - 01:05 AM" name="time" /> 07:00
-            AM - 01:05 AM
-          </div>
-          <div>
-            <input type="radio" value="08:00 AM - 02:35 AM" name="time" /> 08:00
-            AM - 02:35 AM
-          </div>
-          <div>
-            <input type="radio" value="08:30 AM - 02:05 AM" name="time" /> 08:30
-            AM - 02:05 AM
-          </div>
-          <div>
-            <input type="radio" value="09:00 AM - 03:35 AM" name="time" /> 09:00
-            AM - 03:35 AM
-          </div>
-          <div>
-            <input type="radio" value="09:30 AM - 03:05 AM" name="time" /> 09:30
-            AM - 03:05 AM
-          </div>
-          <div>
-            <input type="radio" value="10:00 AM - 04:35 AM" name="time" /> 10:00
-            AM - 04:35 AM
-          </div>
+          {!isLoading ? (
+            scheduleTime.map((time, index) => {
+              return (
+                <div key={index}>
+                  <input type="radio" value={time} name="time" />
+                  <span className="pl-2">{time}</span>
+                </div>
+              );
+            })
+          ) : (
+            <div>Please wait...</div>
+          )}
         </div>
+
         <Link to="/input_information">
           <button className="bg-black text-white p-2">Book Now</button>
         </Link>

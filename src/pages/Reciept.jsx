@@ -1,11 +1,46 @@
 import React from "react";
 import { useGlobal } from "../components/Context/Context";
 import { v4 as uuid } from "uuid";
+import { db } from "../components/firebase/firebase";
+import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+
 function Reciept() {
   const { selectedTime, selectedDate, currentDate, visitors } = useGlobal();
   const randomId = uuid();
   const transitionId = randomId.slice(0, 8);
   let total = 0;
+
+  const handleClickBook = async () => {
+    const visitorRef = doc(
+      db,
+      "bookDetails",
+      selectedDate.toDate().toDateString(),
+      "bookTime",
+      selectedTime,
+      "visitors",
+      transitionId
+    );
+    const timeRef = doc(
+      db,
+      "bookDetails",
+      selectedDate.toDate().toDateString(),
+      "bookTime",
+      selectedTime
+    );
+
+    const docSnap = await getDoc(timeRef);
+
+    if (docSnap.exists()) {
+      await updateDoc(timeRef, {
+        visitorsNumber: docSnap.data().visitorsNumber + 1,
+      });
+    } else {
+      await setDoc(timeRef, { time: selectedTime, visitorsNumber: 1 });
+    }
+
+    await setDoc(visitorRef, { visitorInfo: visitors });
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-3/5 bg-white shadow-lg">
@@ -116,7 +151,10 @@ function Reciept() {
             <button className="px-4 py-2 text-sm text-green-600 bg-green-100">
               Print
             </button>
-            <button className="px-4 py-2 text-sm text-blue-600 bg-blue-100">
+            <button
+              className="px-4 py-2 text-sm text-blue-600 bg-blue-100"
+              onClick={handleClickBook}
+            >
               Book
             </button>
             <button className="px-4 py-2 text-sm text-red-600 bg-red-100">

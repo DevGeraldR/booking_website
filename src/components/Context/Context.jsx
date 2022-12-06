@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
       email: "",
       age: "",
       contactNumber: "",
-      citezenship: "",
+      citezenship: "Filipino",
     },
   ]);
 

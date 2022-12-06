@@ -15,7 +15,7 @@ function Form() {
         email: "",
         age: "",
         contactNumber: "",
-        citezenship: "",
+        citezenship: "Filipino",
       },
     ]);
   };
