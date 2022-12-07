@@ -27,16 +27,15 @@ export default function ChooseDate() {
     );
     const unsub = onSnapshot(timeRef, (snapshot) => {
       const schedule = [
-        { time: "05:00 AM - 11:30 AM", slot: "10" },
-        { time: "05:30 AM - 11:05 AM", slot: "10" },
-        { time: "06:00 AM - 12:35 AM", slot: "10" },
-        { time: "07:00 AM - 01:35 AM", slot: "10" },
-        { time: "07:00 AM - 01:05 AM", slot: "10" },
-        { time: "08:00 AM - 02:35 AM", slot: "10" },
-        { time: "08:30 AM - 02:05 AM", slot: "10" },
-        { time: "09:00 AM - 03:35 AM", slot: "10" },
-        { time: "09:30 AM - 03:05 AM", slot: "10" },
-        { time: "10:00 AM - 04:35 AM", slot: "10" },
+        { time: "06:00 AM - 12:35 PM", slot: "10" },
+        { time: "06:30 AM - 01:05 PM", slot: "10" },
+        { time: "07:00 AM - 01:35 PM", slot: "10" },
+        { time: "07:30 AM - 02:05 PM", slot: "10" },
+        { time: "08:00 AM - 02:35 PM", slot: "10" },
+        { time: "08:30 AM - 03:05 PM", slot: "10" },
+        { time: "09:00 AM - 03:35 PM", slot: "10" },
+        { time: "09:30 AM - 04:05 PM", slot: "10" },
+        { time: "10:00 AM - 04:35 PM", slot: "10" },
       ];
       snapshot.forEach((doc) => {
         const { time, visitorsNumber } = doc.data();
@@ -143,20 +142,27 @@ export default function ChooseDate() {
           {/* 1 for monday 2 for tuesday */}
           {selectedDate.day() === 1 || selectedDate.day() === 2 ? (
             <div>Sorry no booking beetween monday and tuesday</div>
-          ) : !isLoading ? (
-            scheduleTime.map((index) => {
-              return (
-                <div key={index.time} className="flex flex-row gap-5">
-                  <div>
-                    <input type="radio" value={index.time} name="time" />
-                    <span className="pl-2">{index.time}</span>
+          ) : selectedDate.diff(currentDate, "day") + 1 >= 7 &&
+            selectedDate.diff(currentDate, "day") + 1 >= 7 ? (
+            !isLoading ? (
+              scheduleTime.map((index) => {
+                return (
+                  <div key={index.time} className="flex flex-row gap-5">
+                    <div>
+                      <input type="radio" value={index.time} name="time" />
+                      <span className="pl-2">{index.time}</span>
+                    </div>
+                    <p>{index.slot} slot</p>
                   </div>
-                  <p>{index.slot} slot</p>
-                </div>
-              );
-            })
+                );
+              })
+            ) : (
+              <div>Please wait...</div>
+            )
           ) : (
-            <div>Please wait...</div>
+            <div>
+              Sorry booking can be made 1 week from now and up to 3 months only
+            </div>
           )}
         </div>
         <button
