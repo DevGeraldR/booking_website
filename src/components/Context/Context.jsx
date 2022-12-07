@@ -12,7 +12,6 @@ export function AuthProvider({ children }) {
   const currentDate = dayjs();
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedTime, setSelectedTime] = useState("");
-
   const [visitors, setVisitors] = useState([
     {
       fullName: "",

@@ -27,24 +27,27 @@ export default function ChooseDate() {
     );
     const unsub = onSnapshot(timeRef, (snapshot) => {
       const schedule = [
-        "05:00 AM - 11:30 AM",
-        "05:30 AM - 11:05 AM",
-        "06:00 AM - 12:35 AM",
-        "07:00 AM - 01:35 AM",
-        "07:00 AM - 01:05 AM",
-        "08:00 AM - 02:35 AM",
-        "08:30 AM - 02:05 AM",
-        "09:00 AM - 03:35 AM",
-        "09:30 AM - 03:05 AM",
-        "10:00 AM - 04:35 AM",
+        { time: "05:00 AM - 11:30 AM", slot: "10" },
+        { time: "05:30 AM - 11:05 AM", slot: "10" },
+        { time: "06:00 AM - 12:35 AM", slot: "10" },
+        { time: "07:00 AM - 01:35 AM", slot: "10" },
+        { time: "07:00 AM - 01:05 AM", slot: "10" },
+        { time: "08:00 AM - 02:35 AM", slot: "10" },
+        { time: "08:30 AM - 02:05 AM", slot: "10" },
+        { time: "09:00 AM - 03:35 AM", slot: "10" },
+        { time: "09:30 AM - 03:05 AM", slot: "10" },
+        { time: "10:00 AM - 04:35 AM", slot: "10" },
       ];
       snapshot.forEach((doc) => {
         const { time, visitorsNumber } = doc.data();
         if (visitorsNumber >= 10) {
-          const index = schedule.indexOf(time);
+          const index = schedule.findIndex((index) => index.time === time);
           if (index > -1) {
             schedule.splice(index, 1);
           }
+        } else {
+          const index = schedule.findIndex((index) => index.time === time);
+          schedule[index].slot = 10 - visitorsNumber;
         }
       });
       setScheduleTime(schedule);
@@ -141,11 +144,14 @@ export default function ChooseDate() {
           {selectedDate.day() === 1 || selectedDate.day() === 2 ? (
             <div>Sorry no booking beetween monday and tuesday</div>
           ) : !isLoading ? (
-            scheduleTime.map((time, index) => {
+            scheduleTime.map((index) => {
               return (
-                <div key={index}>
-                  <input type="radio" value={time} name="time" />
-                  <span className="pl-2">{time}</span>
+                <div key={index.time} className="flex flex-row gap-5">
+                  <div>
+                    <input type="radio" value={index.time} name="time" />
+                    <span className="pl-2">{index.time}</span>
+                  </div>
+                  <p>{index.slot} slot</p>
                 </div>
               );
             })

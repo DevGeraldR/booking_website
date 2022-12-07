@@ -5,13 +5,22 @@ import { db } from "../components/firebase/firebase";
 import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
+import { useEffect } from "react";
 function Reciept() {
   const { selectedTime, selectedDate, currentDate, visitors } = useGlobal();
   const randomId = uuid();
   const transitionId = randomId.slice(0, 8);
   let total = 0;
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isSuccessfulOpen, setIsSuccessfulOpen] = useState(false);
+  const [isDangerOpen, setIsDangerOpen] = useState(false);
+  const [isWarningOpen, setIsWarningOpen] = useState(false);
+
+  useEffect(() => {
+    if (!selectedTime || !selectedDate) {
+      setIsDangerOpen(true);
+    }
+  }, [setIsDangerOpen, selectedTime, selectedDate]);
 
   const handleClickBook = async () => {
     const visitorRef = doc(
@@ -34,16 +43,23 @@ function Reciept() {
     const docSnap = await getDoc(timeRef);
 
     if (docSnap.exists()) {
+      if (docSnap.data().visitorsNumber + visitors.length > 10) {
+        setIsWarningOpen(true);
+        return;
+      }
       await updateDoc(timeRef, {
-        visitorsNumber: docSnap.data().visitorsNumber + 1,
+        visitorsNumber: docSnap.data().visitorsNumber + visitors.length,
       });
     } else {
-      await setDoc(timeRef, { time: selectedTime, visitorsNumber: 1 });
+      await setDoc(timeRef, {
+        time: selectedTime,
+        visitorsNumber: visitors.length,
+      });
     }
 
     await setDoc(visitorRef, { visitorInfo: visitors });
 
-    setIsOpen(true);
+    setIsSuccessfulOpen(true);
   };
 
   return (
@@ -172,12 +188,12 @@ function Reciept() {
           </div>
         </div>
       </div>
-      <Transition appear show={isOpen} as={Fragment}>
+      <Transition appear show={isSuccessfulOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
           onClose={() => {
-            setIsOpen(false);
+            setIsSuccessfulOpen(false);
             navigate("/");
           }}
         >
@@ -222,11 +238,138 @@ function Reciept() {
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => {
-                        setIsOpen(false);
+                        setIsSuccessfulOpen(false);
                         navigate("/");
                       }}
                     >
                       Okay
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={isDangerOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => {
+            setIsDangerOpen(false);
+            navigate("/book_schedule");
+          }}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl border border-red-300 bg-red-50 p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Sorry no date found
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                      Please select/reselect date.
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white bg-red-900 hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      onClick={() => {
+                        setIsDangerOpen(false);
+                        navigate("/book_schedule");
+                      }}
+                    >
+                      Okay
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={isWarningOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => {
+            setIsWarningOpen(false);
+            navigate("/book_schedule");
+          }}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl border border-red-300 bg-red-50 p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Maximum slot exceeded
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                      The maximum slot per time is exceeded. Maybe it happens
+                      because someone book just a moment.
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white bg-red-900 hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      onClick={() => {
+                        setIsWarningOpen(false);
+                        navigate("/book_schedule");
+                      }}
+                    >
+                      Book new date
                     </button>
                   </div>
                 </Dialog.Panel>
