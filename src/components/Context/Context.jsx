@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
       citezenship: "Filipino",
     },
   ]);
+  const [visitor, setVisitor] = useState([]);
 
   const value = {
     visitors,
@@ -31,6 +32,8 @@ export function AuthProvider({ children }) {
     setSelectedDate,
     selectedTime,
     setSelectedTime,
+    visitor,
+    setVisitor,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
