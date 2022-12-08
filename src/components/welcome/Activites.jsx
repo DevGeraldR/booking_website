@@ -1,11 +1,11 @@
 import React from "react";
 import image1 from "../../assets/Anino_River.jpg";
 import image2 from "../../assets/Descending_Mt._Mataas_na_Gulod_towards_the_Dos_Picos_Valley_of_the_Palay-Palay-Mataas-na-Gulod_Protected_Landscape_of_Cavite.jpg";
-import image3 from "../../assets/Mount_Pico_de_Loro,_Nasugbu,_Philippines.jpg";
+import image3 from "../../assets/Mount_Pico_de_Loro,_Nasugbu,_Philippines.png";
 
 function Activites() {
   return (
-    <div className="max-w-[1140px] m-auto w-full px-4 py-16">
+    <div className="max-w-[1140px] m-auto w-full px-4 py-16" id="activities">
       <div className="p-10 flex flex-col gap-4 text-center">
         <h2 className="text-center text-gray-700 text-3xl font-bold">
           Activity

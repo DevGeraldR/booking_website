@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 function BookSchedule() {
   return (
-    <div className="flex bg-[#d4deae]">
+    <div className="flex bg-[#d4deae]" id="visit">
       <div className="flex w-full h-[500px] flex-col justify-between py-20 items-center">
         <div className="flex flex-col text-center gap-4">
           <span className="text-4xl font-bold">Book a Schedule</span>

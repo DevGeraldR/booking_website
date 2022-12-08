@@ -2,7 +2,7 @@ import React from "react";
 
 function AboutUs() {
   return (
-    <div className="flex h-full w-full">
+    <div className="flex h-full w-full" id="about_us">
       <div className="m-10">
         <div className="text-4xl">
           Welcome to

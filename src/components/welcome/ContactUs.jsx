@@ -2,7 +2,10 @@ import React from "react";
 
 function ContactUs() {
   return (
-    <div className="flex h-auto p-10 w-full flex-col gap-10 justify-center">
+    <div
+      className="flex h-auto p-10 w-full flex-col gap-10 justify-center"
+      id="contact_us"
+    >
       <div className="flex justify-center items-center flex-col">
         <div className="text-3xl font-bold">Contact Us</div>
         <div className="w-[80px] h-0.5 bg-green-900 my-5"></div>
