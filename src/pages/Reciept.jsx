@@ -9,7 +9,7 @@ import { useEffect } from "react";
 function Reciept() {
   const { selectedTime, selectedDate, currentDate, visitors } = useGlobal();
   const randomId = uuid();
-  const transitionId = randomId.slice(0, 8);
+  const transactionId = randomId.slice(0, 8);
   let total = 0;
   const navigate = useNavigate();
   const [isSuccessfulOpen, setIsSuccessfulOpen] = useState(false);
@@ -23,15 +23,7 @@ function Reciept() {
   }, [setIsDangerOpen, selectedTime, selectedDate]);
 
   const handleClickBook = async () => {
-    const visitorRef = doc(
-      db,
-      "bookDetails",
-      selectedDate.toDate().toDateString(),
-      "bookTime",
-      selectedTime,
-      "visitors",
-      transitionId
-    );
+    const visitorRef = doc(db, "visitors", transactionId);
     const timeRef = doc(
       db,
       "bookDetails",
@@ -57,7 +49,12 @@ function Reciept() {
       });
     }
 
-    await setDoc(visitorRef, { visitorInfo: visitors });
+    await setDoc(visitorRef, {
+      transactionNumber: transactionId,
+      scheduledDate: selectedDate.toDate().toDateString(),
+      scheduledTime: selectedTime,
+      visitorInfo: visitors,
+    });
 
     setIsSuccessfulOpen(true);
   };
@@ -71,7 +68,7 @@ function Reciept() {
               <h1 className="text-3xl italic font-extrabold tracking-widest text-green-900">
                 MPPMNGPL
               </h1>
-              <p className="text-base">TRANSACTION ID #: {transitionId}</p>
+              <p className="text-base">TRANSACTION ID #: {transactionId}</p>
               <p className="text-base">{currentDate.toString()}</p>
             </div>
           </div>
