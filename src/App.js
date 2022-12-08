@@ -8,6 +8,8 @@ import { AuthProvider } from "./components/Context/Context";
 import Admin from "./pages/Admin";
 import Booking from "./components/admin/Booking";
 import VisitorInfo from "./components/admin/VisitorInfo";
+import Login from "./components/admin/Login";
+import { PrivateRoute } from "./components/admin/PrivateRoute";
 
 function App() {
   return (
@@ -18,12 +20,15 @@ function App() {
           <Route path="/book_schedule" element={<ChooseDate />} />
           <Route path="/input_information" element={<Form />} />
           <Route path="/receipt" element={<Reciept />} />
-          <Route path="/admin" element={<Admin />}>
-            <Route index element={<Booking />} />
-            <Route
-              path="/admin/visitor_information"
-              element={<VisitorInfo />}
-            />
+          <Route path="/login" element={<Login />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/admin" element={<Admin />}>
+              <Route index element={<Booking />} />
+              <Route
+                path="/admin/visitor_information"
+                element={<VisitorInfo />}
+              />
+            </Route>
           </Route>
         </Routes>
       </AuthProvider>

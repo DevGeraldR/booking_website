@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useGlobal } from "../Context/Context";
 import { NAV_BAR_LINKS } from "./links";
 
 function NavBar() {
   const [navbar, setNavbar] = useState(false);
+  const { logOut } = useGlobal();
+
+  const handleClick = async () => {
+    await logOut().catch((error) => alert(error));
+  };
+
   return (
     <nav className="w-full bg-white border-b border-b-blue-900">
       <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
@@ -58,7 +65,12 @@ function NavBar() {
               {NAV_BAR_LINKS.map((link) => (
                 <SidebarLink key={link.key} link={link} />
               ))}
-              <li className="text-red-600 hover:text-red-900">Logout</li>
+              <li
+                className="text-red-600 hover:text-red-900 cursor-pointer"
+                onClick={handleClick}
+              >
+                Logout
+              </li>
             </ul>
           </div>
         </div>
