@@ -15,7 +15,7 @@ function Login() {
     navigate("/admin");
   };
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-gray-100">
+    <div className="w-full h-screen flex justify-center items-center bg-gray-100">
       <form
         className="p-10 bg-white rounded-xl drop-shadow-lg space-y-5"
         onSubmit={(e) => {
@@ -27,7 +27,7 @@ function Login() {
         <div className="flex flex-col space-y-2">
           <label className="text-sm font-light">Email</label>
           <input
-            className="w-96 px-3 py-2 rounded-md border border-slate-400"
+            className="w-full px-3 py-2 rounded-md border border-slate-400"
             type="email"
             placeholder="Email"
             id="email"
@@ -38,7 +38,7 @@ function Login() {
         <div className="flex flex-col space-y-2">
           <label className="text-sm font-light">Password</label>
           <input
-            className="w-96 px-3 py-2 rounded-md border border-slate-400"
+            className="w-full px-3 py-2 rounded-md border border-slate-400"
             type="password"
             placeholder="Password"
             id="password"

@@ -56,8 +56,8 @@ export default function ChooseDate() {
   }, [selectedDate]);
 
   return (
-    <div className="flex gap-10 sm:divide-x justify-center sm:w-1/2 mx-auto  h-screen items-center sm:flex-row flex-col">
-      <div className="w-96 h-96 ">
+    <div className="flex gap-10 lg:divide-x py-2 justify-center sm:w-1/2 mx-auto h-full md:h-screen items-center lg:flex-row flex-col">
+      <div className="sm:w-96 sm:h-96 max-w-[270px]">
         <div className="flex justify-between items-center">
           <h1 className="select-none font-semibold">
             {months[today.month()]}, {today.year()}
@@ -130,7 +130,7 @@ export default function ChooseDate() {
         </div>
       </div>
       <div
-        className="h-96 w-96 sm:px-5"
+        className="h-96 w-96 sm:px-5 max-w-[280px]"
         onChange={(e) => {
           setSelectedTime(e.target.value);
         }}

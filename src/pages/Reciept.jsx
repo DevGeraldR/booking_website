@@ -62,7 +62,7 @@ function Reciept() {
   return (
     <>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="w-3/5 bg-white shadow-lg">
+        <div className="lg:w-3/5 bg-white shadow-lg">
           <div className="flex justify-between p-4">
             <div>
               <h1 className="text-3xl italic font-extrabold tracking-widest text-green-900">

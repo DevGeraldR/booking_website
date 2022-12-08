@@ -32,35 +32,24 @@ function ListItem({ visitor, index }) {
   };
 
   return (
-    <tr
-      key={index}
-      className="bg-white hover:bg-gray-100 border-b border-b-black cursor-pointer"
-      onClick={() => {
-        setVisitor(visitor);
-        navigate("/admin/visitor_information");
-      }}
-    >
+    <tr key={index} className="bg-white border-b border-b-black ">
       <td className="text-center  px-1 py-2">{index + 1}</td>
       <td className=" px-1 py-2">{visitor.visitorInfo[0].fullName}</td>
-      <td className="text-center  px-1 py-2 ">
+      <td className="text-center  px-1 py-2">
         <button
-          className="text-red-600"
+          className="text-black"
+          onClick={() => {
+            setVisitor(visitor);
+            navigate("/admin/visitor_information");
+          }}
+        >
+          open
+        </button>
+        <button
+          className="text-red-600 pl-3"
           onClick={() => handleClickRemove(visitor.transactionNumber)}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-            />
-          </svg>
+          delete
         </button>
       </td>
     </tr>
