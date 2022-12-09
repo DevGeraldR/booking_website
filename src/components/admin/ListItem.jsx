@@ -7,28 +7,30 @@ import { useNavigate } from "react-router-dom";
 function ListItem({ visitor, index }) {
   const { setVisitor } = useGlobal();
   const navigate = useNavigate();
+
   const handleClickRemove = async (tag) => {
-    const userRef = doc(db, "visitors", tag);
-    const timeRef = doc(
-      db,
-      "bookDetails",
-      visitor.scheduledDate,
-      "bookTime",
-      visitor.scheduledTime
-    );
+    const confirm = window.confirm("Are you sure you want to delete?");
+    if (confirm) {
+      const userRef = doc(db, "visitors", tag);
+      const timeRef = doc(
+        db,
+        "bookDetails",
+        visitor.scheduledDate,
+        "bookTime",
+        visitor.scheduledTime
+      );
 
-    await deleteDoc(userRef);
+      await deleteDoc(userRef);
 
-    const docSnap = await getDoc(timeRef);
+      const docSnap = await getDoc(timeRef);
 
-    if (docSnap.exists()) {
-      await updateDoc(timeRef, {
-        visitorsNumber:
-          docSnap.data().visitorsNumber - visitor.visitorInfo.length,
-      });
+      if (docSnap.exists()) {
+        await updateDoc(timeRef, {
+          visitorsNumber:
+            docSnap.data().visitorsNumber - visitor.visitorInfo.length,
+        });
+      }
     }
-
-    alert("Admin sucessfully deleted");
   };
 
   return (
@@ -37,7 +39,7 @@ function ListItem({ visitor, index }) {
       <td className=" px-1 py-2">{visitor.visitorInfo[0].fullName}</td>
       <td className="text-center  px-1 py-2">
         <button
-          className="text-black"
+          className="text-black hover:text-gray-600"
           onClick={() => {
             setVisitor(visitor);
             navigate("/admin/visitor_information");
@@ -46,7 +48,7 @@ function ListItem({ visitor, index }) {
           open
         </button>
         <button
-          className="text-red-600 pl-3"
+          className="text-red-600 pl-3 hover:text-red-900"
           onClick={() => handleClickRemove(visitor.transactionNumber)}
         >
           delete

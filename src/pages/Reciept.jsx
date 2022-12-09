@@ -3,18 +3,19 @@ import { useGlobal } from "../components/Context/Context";
 import { v4 as uuid } from "uuid";
 import { db } from "../components/firebase/firebase";
 import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { useEffect } from "react";
+const randomId = uuid();
 function Reciept() {
   const { selectedTime, selectedDate, currentDate, visitors } = useGlobal();
-  const randomId = uuid();
   const transactionId = randomId.slice(0, 8);
   let total = 0;
   const navigate = useNavigate();
   const [isSuccessfulOpen, setIsSuccessfulOpen] = useState(false);
   const [isDangerOpen, setIsDangerOpen] = useState(false);
   const [isWarningOpen, setIsWarningOpen] = useState(false);
+  const [isAgree, setIsAgree] = useState(false);
 
   useEffect(() => {
     if (!selectedTime || !selectedDate) {
@@ -155,22 +156,31 @@ function Reciept() {
             </div>
           </div>
           <div className="p-4">
-            <h3 className="text-xl">Terms And Condition :</h3>
-            <ul className="text-xs list-disc list-inside">
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-            </ul>
+            <label>
+              <input
+                type="checkbox"
+                checked={isAgree}
+                onChange={(e) => setIsAgree(!isAgree)}
+              />{" "}
+              I agree with
+              <Link to="/terms_and_condition">
+                <span className="pl-1 text-blue-400 cursor-pointer hover:text-blue-600">
+                  Terms And Condition
+                </span>
+              </Link>
+            </label>
           </div>
           <div className="w-full h-0.5 bg-green-900"></div>
 
           <div className="p-4">
-            <div className="flex items-center justify-center">
-              Thank you very much for visiting us.
-            </div>
             <div className="flex items-end justify-end space-x-3">
               <button
-                className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                className={`${
+                  !isAgree
+                    ? "bg-gray-100 text-gray-900"
+                    : "bg-blue-100 text-blue-900 hover:bg-blue-200 focus-visible:ring-blue-500"
+                } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`}
+                disabled={!isAgree}
                 onClick={handleClickBook}
               >
                 Book

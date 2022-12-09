@@ -10,6 +10,7 @@ import Booking from "./components/admin/Booking";
 import VisitorInfo from "./components/admin/VisitorInfo";
 import Login from "./components/admin/Login";
 import { PrivateRoute } from "./components/admin/PrivateRoute";
+import TermsAndCondition from "./pages/TermsAndCondition";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/book_schedule" element={<ChooseDate />} />
           <Route path="/input_information" element={<Form />} />
           <Route path="/receipt" element={<Reciept />} />
+          <Route path="/terms_and_condition" element={<TermsAndCondition />} />
           <Route path="/login" element={<Login />} />
           <Route element={<PrivateRoute />}>
             <Route path="/admin" element={<Admin />}>
