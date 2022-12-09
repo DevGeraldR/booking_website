@@ -6,9 +6,10 @@ import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { useEffect } from "react";
+
 const randomId = uuid();
 function Reciept() {
-  const { selectedTime, selectedDate, currentDate, visitors } = useGlobal();
+  const { selectedTime, selectedDate, visitors } = useGlobal();
   const transactionId = randomId.slice(0, 8);
   let total = 0;
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Reciept() {
   const [isDangerOpen, setIsDangerOpen] = useState(false);
   const [isWarningOpen, setIsWarningOpen] = useState(false);
   const [isAgree, setIsAgree] = useState(false);
+  const currentDate = new Date();
 
   useEffect(() => {
     if (!selectedTime || !selectedDate) {
@@ -70,7 +72,9 @@ function Reciept() {
                 MPPMNGPL
               </h1>
               <p className="text-base">TRANSACTION ID #: {transactionId}</p>
-              <p className="text-base">{currentDate.toString()}</p>
+              <p className="text-base">
+                {currentDate.toLocaleString().toString()}
+              </p>
             </div>
           </div>
           <div className="w-full h-0.5 bg-green-900"></div>
@@ -162,7 +166,7 @@ function Reciept() {
                 checked={isAgree}
                 onChange={(e) => setIsAgree(!isAgree)}
               />{" "}
-              I agree with
+              I agree to the
               <Link to="/terms_and_condition">
                 <span className="pl-1 text-blue-400 cursor-pointer hover:text-blue-600">
                   Terms And Condition
