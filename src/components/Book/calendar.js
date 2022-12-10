@@ -14,7 +14,6 @@ export const generateDate = (
     const date = firstDateOfMonth.day(i);
 
     arrayOfDate.push({
-      currentMonth: false,
       date,
     });
   }
@@ -22,7 +21,6 @@ export const generateDate = (
   // generate current date
   for (let i = firstDateOfMonth.date(); i <= lastDateOfMonth.date(); i++) {
     arrayOfDate.push({
-      currentMonth: true,
       date: firstDateOfMonth.date(i),
       today:
         firstDateOfMonth.date(i).toDate().toDateString() ===
@@ -38,7 +36,6 @@ export const generateDate = (
     i++
   ) {
     arrayOfDate.push({
-      currentMonth: false,
       date: lastDateOfMonth.date(i),
     });
   }

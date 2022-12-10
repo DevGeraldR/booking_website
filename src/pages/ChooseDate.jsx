@@ -100,7 +100,7 @@ export default function ChooseDate() {
 
         <div className=" grid grid-cols-7 ">
           {generateDate(today.month(), today.year()).map(
-            ({ date, currentMonth, today }, index) => {
+            ({ date, today }, index) => {
               return (
                 <div
                   key={index}
@@ -108,13 +108,18 @@ export default function ChooseDate() {
                 >
                   <h1
                     className={cn(
-                      currentMonth ? "" : "text-gray-400",
+                      (date.day() > 2 || date.day() < 1) &&
+                        date.diff(currentDate, "day") + 1 >= 7 &&
+                        date.diff(currentDate, "day") + 1 <= 90
+                        ? "text-green-500 font-bold"
+                        : "text-gray-400",
                       today ? "bg-blue-600 text-white" : "",
+
                       selectedDate.toDate().toDateString() ===
                         date.toDate().toDateString()
                         ? "bg-black text-white"
                         : "",
-                      "h-10 w-10 rounded-full grid place-content-center hover:bg-black hover:text-white transition-all cursor-pointer select-none"
+                      "h-10 w-10 rounded-full grid place-content-center hover:bg-black transition-all cursor-pointer select-none"
                     )}
                     onClick={() => {
                       setSelectedDate(date);
@@ -143,7 +148,7 @@ export default function ChooseDate() {
           {selectedDate.day() === 1 || selectedDate.day() === 2 ? (
             <div>Sorry no booking beetween monday and tuesday</div>
           ) : selectedDate.diff(currentDate, "day") + 1 >= 7 &&
-            selectedDate.diff(currentDate, "day") + 1 >= 7 ? (
+            selectedDate.diff(currentDate, "day") + 1 <= 90 ? (
             !isLoading ? (
               scheduleTime.map((index) => {
                 return (

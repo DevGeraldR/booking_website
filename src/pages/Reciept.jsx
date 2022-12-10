@@ -1,12 +1,13 @@
-import React, { Fragment, useMemo, useState } from "react";
+import React, { Fragment, useMemo, useRef, useState } from "react";
 import { useGlobal } from "../components/Context/Context";
 import { v4 as uuid } from "uuid";
 import { db } from "../components/firebase/firebase";
 import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { useEffect } from "react";
 import logo from "../assets/PAMB LOGO ON BLACK.png";
+import ReactToPrint from "react-to-print";
 
 function Reciept() {
   const randomId = useMemo(() => uuid(), []);
@@ -17,9 +18,9 @@ function Reciept() {
   const [isSuccessfulOpen, setIsSuccessfulOpen] = useState(false);
   const [isDangerOpen, setIsDangerOpen] = useState(false);
   const [isWarningOpen, setIsWarningOpen] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const currentDate = new Date();
+  let componentRef = useRef(null);
 
   useEffect(() => {
     if (!selectedTime || !selectedDate) {
@@ -67,179 +68,169 @@ function Reciept() {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="lg:w-3/5 bg-white shadow-lg">
-          <div className="flex justify-between pt-4 md:px-4 px-2">
-            <div className="w-full flex justify-between flex-row gap-2">
-              <div>
-                <h1 className="text-3xl italic font-extrabold  text-green-900">
-                  MPPMNGPL
-                </h1>
-                <p className="text-base">TRANSACTION ID #: {transactionId}</p>
-                <p className="text-base">
-                  {currentDate.toLocaleString().toString()}
-                </p>
-              </div>
-              <div>
-                <img
-                  className="md:w-[90px] md:h-[90px] h-[60px] w-[60px] mb-1"
-                  src={logo}
-                  alt="logo"
-                />
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div
+          className="w-full flex justify-center items-center"
+          ref={componentRef}
+        >
+          <div className="lg:w-3/5 bg-white shadow-lg">
+            <div className="flex justify-between pt-4 md:px-4 px-2">
+              <div className="w-full flex justify-between flex-row gap-2">
+                <div>
+                  <h1 className="text-3xl italic font-extrabold  text-green-900">
+                    MPPMNGPL
+                  </h1>
+                  <p className="text-base">TRANSACTION ID #: {transactionId}</p>
+                  <p className="text-base">
+                    {currentDate.toLocaleString().toString()}
+                  </p>
+                </div>
+                <div>
+                  <img
+                    className="md:w-[90px] md:h-[90px] h-[60px] w-[60px] mb-1"
+                    src={logo}
+                    alt="logo"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="w-full h-0.5 bg-green-900"></div>
-          <div className="flex justify-between p-4">
-            <div>
-              <h6 className="font-bold">
-                Book Date :
-                <span className="pl-2 text-sm font-medium">
-                  {selectedDate.toDate().toDateString()}
-                </span>
-              </h6>
-              <h6 className="font-bold">
-                Book Time :
-                <span className="pl-2 text-sm font-medium">{selectedTime}</span>
-              </h6>
+            <div className="w-full h-0.5 bg-green-900"></div>
+            <div className="flex justify-between p-4">
+              <div>
+                <h6 className="font-bold">
+                  Book Date :
+                  <span className="pl-2 text-sm font-medium">
+                    {selectedDate.toDate().toDateString()}
+                  </span>
+                </h6>
+                <h6 className="font-bold">
+                  Book Time :
+                  <span className="pl-2 text-sm font-medium">
+                    {selectedTime}
+                  </span>
+                </h6>
+              </div>
             </div>
-          </div>
-          <div className="flex justify-center p-4">
-            <div className="border-b border-gray-200 shadow overflow-x-auto">
-              <table>
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-1 md:px-4 py-2 text-xs text-gray-500 ">
-                      #
-                    </th>
-                    <th className="px-1 md:px-4 py-2 text-xs text-gray-500 ">
-                      Name
-                    </th>
-                    <th className="px-1 md:px-4 py-2 text-xs text-gray-500 ">
-                      Type
-                    </th>
-                    <th className="px-1 md:px-4 py-2 text-xs text-gray-500 ">
-                      Price
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white">
-                  {visitors.map((value, index) => {
-                    let price;
-                    if (value.citezenship === "Filipino") {
-                      if (value.age <= 6) {
-                        price = 120;
-                      } else if (value.age >= 7 && value.age <= 18) {
-                        price = 100;
-                      } else if (value.age >= 19 && value.age <= 59) {
-                        price = 150;
+            <div className="flex justify-center p-4">
+              <div className="border-b border-gray-200 shadow overflow-x-auto">
+                <table>
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-1 md:px-4 py-2 text-xs text-gray-500 ">
+                        #
+                      </th>
+                      <th className="px-1 md:px-4 py-2 text-xs text-gray-500 ">
+                        Name
+                      </th>
+                      <th className="px-1 md:px-4 py-2 text-xs text-gray-500 ">
+                        Type
+                      </th>
+                      <th className="px-1 md:px-4 py-2 text-xs text-gray-500 ">
+                        Price
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white">
+                    {visitors.map((value, index) => {
+                      let price;
+                      if (value.citezenship === "Filipino") {
+                        price = 200;
                       } else {
-                        price = 120;
+                        price = 300;
                       }
-                    } else {
-                      price = 300;
-                    }
-                    total += price;
-                    return (
-                      <tr className="whitespace-nowrap" key={index}>
-                        <td className="px-2 md:px-6 py-4 text-sm text-gray-500">
-                          {index + 1}
-                        </td>
-                        <td className="px-2 md:px-6 py-4">
-                          <div className="text-sm text-gray-900">
-                            {value.fullName}
-                          </div>
-                        </td>
-                        <td className="px-2 md:px-6 py-4">
-                          {value.citezenship}
-                        </td>
-                        <td className="px-2 md:px-6 py-4">₱{price}</td>
-                      </tr>
-                    );
-                  })}
+                      total += price;
+                      return (
+                        <tr className="whitespace-nowrap" key={index}>
+                          <td className="px-2 md:px-6 py-4 text-sm text-gray-500">
+                            {index + 1}
+                          </td>
+                          <td className="px-2 md:px-6 py-4">
+                            <div className="text-sm text-gray-900">
+                              {value.fullName}
+                            </div>
+                          </td>
+                          <td className="px-2 md:px-6 py-4">
+                            {value.citezenship}
+                          </td>
+                          <td className="px-2 md:px-6 py-4">₱{price}</td>
+                        </tr>
+                      );
+                    })}
 
-                  <tr className="text-white bg-gray-800 text-center">
-                    <th colSpan="2"></th>
-                    <td className="text-sm font-bold">
-                      <b>Total :</b>
-                    </td>
-                    <td className="text-sm font-bold">
-                      <b>₱{total}</b>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    <tr className="text-white bg-gray-800 text-center">
+                      <th colSpan="2"></th>
+                      <td className="text-sm font-bold">
+                        <b>Total :</b>
+                      </td>
+                      <td className="text-sm font-bold">
+                        <b>₱{total}</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
+            <div className="w-full h-0.5 mt-10 mb-20 bg-green-900"></div>
           </div>
-          <div className="p-4">
-            <label>
-              <input
-                type="checkbox"
-                checked={!isDisabled}
-                onChange={(e) => setIsDisabled(!isDisabled)}
-              />{" "}
-              I agree to the
-              <Link to="/terms_and_condition">
-                <span className="pl-1 text-blue-400 cursor-pointer hover:text-blue-600">
-                  Terms And Condition
-                </span>
-              </Link>
-            </label>
-          </div>
-          <div className="w-full h-0.5 bg-green-900"></div>
-
-          <div className="p-4">
-            <div className="flex items-end justify-end space-x-3">
-              {isLoading ? (
-                <button
-                  disabled
-                  className="hover:bg-blue-200 cursor-not-allowed inline-flex justify-center rounded-md bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900"
-                >
-                  <svg
-                    className="w-5 h-5 mr-3 -ml-1 text-blue-900 animate-spin"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      stroke-width="4"
-                    ></circle>
-                    <path
-                      class="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Booking...
-                </button>
-              ) : (
-                <button
-                  className={`${
-                    isDisabled
-                      ? "bg-gray-100 text-gray-900 cursor-not-allowed"
-                      : "bg-blue-100 text-blue-900 hover:bg-blue-200 focus-visible:ring-blue-500"
-                  } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`}
-                  disabled={isDisabled}
-                  onClick={handleClickBook}
-                >
-                  Book
-                </button>
-              )}
+        </div>
+        <div className="p-4">
+          <div className="flex items-end justify-end space-x-3">
+            <ReactToPrint
+              trigger={() => {
+                return (
+                  <button className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2">
+                    Print
+                  </button>
+                );
+              }}
+              content={() => componentRef.current}
+              documentTitle="MPPMNGPL Booking Receipt"
+            />
+            {isLoading ? (
               <button
-                className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                onClick={() => navigate("/input_information")}
+                disabled
+                className="hover:bg-blue-200 cursor-not-allowed inline-flex justify-center rounded-md bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900"
               >
-                Back
+                <svg
+                  className="w-5 h-5 mr-3 -ml-1 text-blue-900 animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Booking...
               </button>
-            </div>
+            ) : (
+              <button
+                className="bg-blue-100 text-blue-900 hover:bg-blue-200 focus-visible:ring-blue-500 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                onClick={handleClickBook}
+              >
+                Book
+              </button>
+            )}
+            <button
+              className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              onClick={() => navigate("/input_information")}
+            >
+              Back
+            </button>
           </div>
         </div>
       </div>
+
       <Transition appear show={isSuccessfulOpen} as={Fragment}>
         <Dialog
           as="div"

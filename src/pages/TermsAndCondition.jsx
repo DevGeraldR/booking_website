@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function TermsAndCondition() {
+  const [isDisabled, setIsDisabled] = useState(true);
   const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen pt-5 bg-gray-100">
@@ -287,14 +288,40 @@ function TermsAndCondition() {
               this act.” <br />
             </p>
           </div>
+          <br />
         </article>
+
+        <label>
+          <input
+            type="checkbox"
+            checked={!isDisabled}
+            onChange={(e) => setIsDisabled(!isDisabled)}
+          />
+          <span className="pl-2">I agree to the Terms And Condition</span>
+        </label>
       </div>
-      <button
-        className="my-5 inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-        onClick={() => navigate("/receipt")}
-      >
-        Return
-      </button>
+      <div className="items-end gap-4">
+        <button
+          type="button"
+          className="inline-flex rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+          onClick={() => {
+            navigate("/input_information");
+          }}
+        >
+          Back
+        </button>
+        <button
+          className={`${
+            isDisabled
+              ? "bg-gray-300 text-gray-900 cursor-not-allowed"
+              : "bg-blue-100 text-blue-900 hover:bg-blue-200 focus-visible:ring-blue-500"
+          } inline-flex justify-center rounded-md border border-transparent px-4 py-2 m-5 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`}
+          disabled={isDisabled}
+          onClick={() => navigate("/receipt")}
+        >
+          Continue
+        </button>
+      </div>
     </div>
   );
 }

@@ -42,8 +42,8 @@ function ContactUs() {
         <div className="lg:col-span-1 col-span-3 text-center">
           <h6 className="font-medium">CONTACT INFO</h6>
           <ul>
-            <li className="py-2 text-sm">Monday – Sunday</li>
-            <li className="py-2 text-sm">(8:00am-5:00pm</li>
+            <li className="py-2 text-sm">Monday – Friday</li>
+            <li className="py-2 text-sm">8:00am-5:00pm</li>
           </ul>
         </div>
       </div>

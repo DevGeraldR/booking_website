@@ -67,7 +67,7 @@ function Form() {
         className="flex flex-col min-h-screen p-6 bg-gray-100 flex items-center justify-center"
         onSubmit={(e) => {
           e.preventDefault();
-          navigate("/receipt");
+          navigate("/terms_and_condition");
         }}
       >
         <div className="text-blue-900 bg-white rounded shadow-lg p-1 px-1 md:p-2 mb-6">
@@ -211,6 +211,15 @@ function Form() {
           <div className="inline-flex items-end gap-4">
             <button
               type="button"
+              className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              onClick={() => {
+                navigate("/book_schedule");
+              }}
+            >
+              Back
+            </button>
+            <button
+              type="button"
               className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
               onClick={addInputField}
             >
@@ -221,15 +230,6 @@ function Form() {
               className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
               Book
-            </button>
-            <button
-              type="button"
-              className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-              onClick={() => {
-                navigate("/book_schedule");
-              }}
-            >
-              Back
             </button>
           </div>
         </div>
