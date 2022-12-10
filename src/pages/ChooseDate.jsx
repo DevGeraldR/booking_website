@@ -56,137 +56,141 @@ export default function ChooseDate() {
   }, [selectedDate]);
 
   return (
-    <div className="flex gap-10 lg:divide-x py-2 justify-center sm:w-1/2 mx-auto h-full md:h-screen items-center lg:flex-row flex-col">
-      <div className="sm:w-96 sm:h-96 max-w-[270px]">
-        <div className="flex justify-between items-center">
-          <h1 className="select-none font-semibold">
-            {months[today.month()]}, {today.year()}
-          </h1>
-          <div className="flex gap-10 items-center ">
-            <GrFormPrevious
-              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all"
-              onClick={() => {
-                setToday(today.month(today.month() - 1));
-              }}
-            />
-            <h1
-              className=" cursor-pointer hover:scale-105 transition-all"
-              onClick={() => {
-                setToday(currentDate);
-              }}
-            >
-              Today
+    <div className="flex my-5 gap-5 items-center justify-center flex-col mx-auto h-full md:h-screen">
+      <h1 className="text-green-500 text-2xl">Choose Date</h1>
+      <div className="flex gap-10 lg:divide-x sm:w-1/2 items-center lg:flex-row flex-col">
+        <div className="sm:w-96 sm:h-96 max-w-[270px]">
+          <div className="flex justify-between items-center">
+            <h1 className="select-none font-semibold">
+              {months[today.month()]}, {today.year()}
             </h1>
-            <GrFormNext
-              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all"
-              onClick={() => {
-                setToday(today.month(today.month() + 1));
-              }}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-7 ">
-          {days.map((day, index) => {
-            return (
+            <div className="flex gap-10 items-center ">
+              <GrFormPrevious
+                className="w-5 h-5 cursor-pointer hover:scale-105 transition-all"
+                onClick={() => {
+                  setToday(today.month(today.month() - 1));
+                }}
+              />
               <h1
-                key={index}
-                className="text-sm text-center h-14 w-14 grid place-content-center text-gray-500 select-none"
+                className=" cursor-pointer hover:scale-105 transition-all"
+                onClick={() => {
+                  setToday(currentDate);
+                }}
               >
-                {day}
+                Today
               </h1>
-            );
-          })}
-        </div>
-
-        <div className=" grid grid-cols-7 ">
-          {generateDate(today.month(), today.year()).map(
-            ({ date, today }, index) => {
+              <GrFormNext
+                className="w-5 h-5 cursor-pointer hover:scale-105 transition-all"
+                onClick={() => {
+                  setToday(today.month(today.month() + 1));
+                }}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-7 ">
+            {days.map((day, index) => {
               return (
-                <div
+                <h1
                   key={index}
-                  className="p-2 text-center h-14 grid place-content-center text-sm border-t"
+                  className="text-sm text-center h-14 w-14 grid place-content-center text-gray-500 select-none"
                 >
-                  <h1
-                    className={cn(
-                      (date.day() > 2 || date.day() < 1) &&
-                        date.diff(currentDate, "day") + 1 >= 7 &&
-                        date.diff(currentDate, "day") + 1 <= 90
-                        ? "text-green-500 font-bold"
-                        : "text-gray-400",
-                      today ? "bg-blue-600 text-white" : "",
-
-                      selectedDate.toDate().toDateString() ===
-                        date.toDate().toDateString()
-                        ? "bg-black text-white"
-                        : "",
-                      "h-10 w-10 rounded-full grid place-content-center hover:bg-black transition-all cursor-pointer select-none"
-                    )}
-                    onClick={() => {
-                      setSelectedDate(date);
-                      setSelectedTime("");
-                    }}
-                  >
-                    {date.date()}
-                  </h1>
-                </div>
+                  {day}
+                </h1>
               );
-            }
-          )}
-        </div>
-      </div>
-      <div
-        className="h-96 w-96 sm:px-5 max-w-[280px]"
-        onChange={(e) => {
-          setSelectedTime(e.target.value);
-        }}
-      >
-        <h1 className=" font-semibold">
-          Available Schedule for {selectedDate.toDate().toDateString()}
-        </h1>
-        <div className="flex flex-col gap-2 my-3">
-          {/* 1 for monday 2 for tuesday */}
-          {selectedDate.day() === 1 || selectedDate.day() === 2 ? (
-            <div>Sorry no booking beetween monday and tuesday</div>
-          ) : selectedDate.diff(currentDate, "day") + 1 >= 7 &&
-            selectedDate.diff(currentDate, "day") + 1 <= 90 ? (
-            !isLoading ? (
-              scheduleTime.map((index) => {
+            })}
+          </div>
+
+          <div className=" grid grid-cols-7 ">
+            {generateDate(today.month(), today.year()).map(
+              ({ date, today }, index) => {
                 return (
-                  <div key={index.time} className="flex flex-row gap-5">
-                    <div>
-                      <input type="radio" value={index.time} name="time" />
-                      <span className="pl-2">{index.time}</span>
-                    </div>
-                    <p>{index.slot} slot</p>
+                  <div
+                    key={index}
+                    className="p-2 text-center h-14 grid place-content-center text-sm border-t"
+                  >
+                    <h1
+                      className={cn(
+                        (date.day() > 2 || date.day() < 1) &&
+                          date.diff(currentDate, "day") + 1 >= 7 &&
+                          date.diff(currentDate, "day") + 1 <= 90
+                          ? "text-green-500 font-bold"
+                          : "text-gray-400",
+                        today ? "bg-blue-600 text-white" : "",
+
+                        selectedDate.toDate().toDateString() ===
+                          date.toDate().toDateString()
+                          ? "bg-black text-white"
+                          : "",
+                        "h-10 w-10 rounded-full grid place-content-center hover:bg-black transition-all cursor-pointer select-none"
+                      )}
+                      onClick={() => {
+                        setSelectedDate(date);
+                        setSelectedTime("");
+                      }}
+                    >
+                      {date.date()}
+                    </h1>
                   </div>
                 );
-              })
-            ) : (
-              <div>Please wait...</div>
-            )
-          ) : (
-            <div>
-              Sorry booking can be made 1 week from now and up to 3 months only
-            </div>
-          )}
+              }
+            )}
+          </div>
         </div>
-        <button
-          onClick={() => navigate("/input_information")}
-          disabled={
-            selectedDate.day() === 1 ||
-            selectedDate.day() === 2 ||
-            !selectedTime
-          }
-          className={`${
-            selectedDate.day() === 1 ||
-            selectedDate.day() === 2 ||
-            !selectedTime
-              ? "bg-gray-100 text-gray-900 hover:bg-gray-200 cursor-not-allowed"
-              : "bg-blue-100 text-blue-900 hover:bg-blue-200"
-          } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
+        <div
+          className="h-96 w-96 sm:px-5 max-w-[280px]"
+          onChange={(e) => {
+            setSelectedTime(e.target.value);
+          }}
         >
-          Book Now
-        </button>
+          <h1 className=" font-semibold">
+            Available Schedule for {selectedDate.toDate().toDateString()}
+          </h1>
+          <div className="flex flex-col gap-2 my-3">
+            {/* 1 for monday 2 for tuesday */}
+            {selectedDate.day() === 1 || selectedDate.day() === 2 ? (
+              <div>Sorry no booking beetween monday and tuesday</div>
+            ) : selectedDate.diff(currentDate, "day") + 1 >= 7 &&
+              selectedDate.diff(currentDate, "day") + 1 <= 90 ? (
+              !isLoading ? (
+                scheduleTime.map((index) => {
+                  return (
+                    <div key={index.time} className="flex flex-row gap-5">
+                      <div>
+                        <input type="radio" value={index.time} name="time" />
+                        <span className="pl-2">{index.time}</span>
+                      </div>
+                      <p>{index.slot} slot</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <div>Please wait...</div>
+              )
+            ) : (
+              <div>
+                Sorry booking can be made 1 week from now and up to 3 months
+                only
+              </div>
+            )}
+          </div>
+          <button
+            onClick={() => navigate("/input_information")}
+            disabled={
+              selectedDate.day() === 1 ||
+              selectedDate.day() === 2 ||
+              !selectedTime
+            }
+            className={`${
+              selectedDate.day() === 1 ||
+              selectedDate.day() === 2 ||
+              !selectedTime
+                ? "bg-gray-100 text-gray-900 hover:bg-gray-200 cursor-not-allowed"
+                : "bg-blue-100 text-blue-900 hover:bg-blue-200"
+            } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
+          >
+            Book Now
+          </button>
+        </div>
       </div>
     </div>
   );
