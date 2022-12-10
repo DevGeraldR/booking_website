@@ -56,7 +56,7 @@ export default function ChooseDate() {
   }, [selectedDate]);
 
   return (
-    <div className="flex my-5 gap-5 items-center justify-center flex-col mx-auto h-full md:h-screen">
+    <div className="flex py-5 gap-5 items-center justify-center flex-col mx-auto h-full md:h-screen">
       <h1 className="text-green-500 text-2xl">Choose Date</h1>
       <div className="flex gap-10 lg:divide-x sm:w-1/2 items-center lg:flex-row flex-col">
         <div className="sm:w-96 sm:h-96 max-w-[270px]">
