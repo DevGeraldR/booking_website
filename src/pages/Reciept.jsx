@@ -11,7 +11,7 @@ import ReactToPrint from "react-to-print";
 
 function Reciept() {
   const randomId = useMemo(() => uuid(), []);
-  const { selectedTime, selectedDate, visitors } = useGlobal();
+  const { selectedTime, selectedDate, visitors, setVisitors } = useGlobal();
   const transactionId = randomId.slice(0, 8);
   let total = 0;
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ function Reciept() {
   const [isDangerOpen, setIsDangerOpen] = useState(false);
   const [isWarningOpen, setIsWarningOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPrinted, setIsPrinted] = useState(false);
   const currentDate = new Date();
   let componentRef = useRef(null);
 
@@ -63,6 +64,16 @@ function Reciept() {
       visitorInfo: visitors,
     });
     setIsLoading(false);
+    setVisitors([
+      {
+        fullName: "",
+        address: "",
+        email: "",
+        age: "",
+        contactNumber: "",
+        citezenship: "Filipino",
+      },
+    ]);
     setIsSuccessfulOpen(true);
   };
 
@@ -194,6 +205,9 @@ function Reciept() {
                   );
                 }}
                 content={() => componentRef.current}
+                onAfterPrint={() => {
+                  setIsPrinted(true);
+                }}
                 documentTitle="MPPMNGPL Booking Receipt"
               />
               {isLoading ? (
@@ -213,10 +227,10 @@ function Reciept() {
                       cy="12"
                       r="10"
                       stroke="currentColor"
-                      stroke-width="4"
+                      strokeWidth="4"
                     ></circle>
                     <path
-                      class="opacity-75"
+                      className="opacity-75"
                       fill="currentColor"
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
@@ -225,8 +239,13 @@ function Reciept() {
                 </button>
               ) : (
                 <button
-                  className="bg-blue-100 text-blue-900 hover:bg-blue-200 focus-visible:ring-blue-500 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                  className={`${
+                    !isPrinted
+                      ? "bg-gray-200 text-gray-900 hover:bg-gray-200 cursor-not-allowed"
+                      : "bg-blue-100 text-blue-900 hover:bg-blue-200"
+                  } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
                   onClick={handleClickBook}
+                  disabled={!isPrinted}
                 >
                   Book
                 </button>

@@ -12,9 +12,9 @@ function VisitorInfo() {
           <h1>Transaction #: {visitor.transactionNumber}</h1>
           <h1>Date: {visitor.scheduledDate}</h1>
           <h1 className="pb-2">Time: {visitor.scheduledTime}</h1>
-          {visitor.visitorInfo.map((v) => {
+          {visitor.visitorInfo.map((v, index) => {
             return (
-              <>
+              <div key={index}>
                 <div className="w-full h-0.5 bg-green-900 my-2"></div>
                 <ul key={v.fullName}>
                   <li>Name: {v.fullName}</li>
@@ -23,7 +23,7 @@ function VisitorInfo() {
                   <li>Contact Number: {v.contactNumber}</li>
                   <li>Email: {v.email}</li>
                 </ul>
-              </>
+              </div>
             );
           })}
           <div className="w-full h-0.5 bg-green-900 my-2"></div>

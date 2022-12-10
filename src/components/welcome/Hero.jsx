@@ -1,5 +1,7 @@
 import React from "react";
-import hero from "../../assets/Mount_Pico_de_Loro,_Nasugbu,_Philippines.png";
+import hero from "../../assets/Mount_Pico_de_Loro,_Nasugbu,_Philippines.jpg";
+import logo1 from "../../assets/PAMB LOGO ON BLACK.png";
+import logo2 from "../../assets/PENRO_Logo-removebg.png";
 
 const Hero = () => {
   return (
@@ -13,7 +15,20 @@ const Hero = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
-    ></div>
+    >
+      <div className="flex justify-start items-end h-full pl-5">
+        <img
+          className="md:w-[95px] md:h-[95px] h-[65px] w-[65px] mb-4"
+          src={logo1}
+          alt="logo"
+        />
+        <img
+          className="md:w-[125px] md:h-[125px] h-[93px] w-[93px]"
+          src={logo2}
+          alt="logo"
+        />
+      </div>
+    </div>
   );
 };
 
