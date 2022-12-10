@@ -9,7 +9,7 @@ function BookSchedule() {
           <span className="text-white text-lg">Reserve a date</span>
         </div>
         <Link to="/book_schedule">
-          <button className="bg-green-700 p-3 text-white rounded-lg">
+          <button className="bg-green-700 p-3 text-white rounded-lg hover:bg-[#4b6043]">
             BOOK A SCHEDULE
           </button>
         </Link>

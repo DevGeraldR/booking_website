@@ -1,7 +1,7 @@
 import React from "react";
 import image1 from "../../assets/Anino_River.jpg";
 import image2 from "../../assets/Descending_Mt._Mataas_na_Gulod_towards_the_Dos_Picos_Valley_of_the_Palay-Palay-Mataas-na-Gulod_Protected_Landscape_of_Cavite.jpg";
-import image3 from "../../assets/Mount_Pico_de_Loro,_Nasugbu,_Philippines.png";
+import image3 from "../../assets/Mount_Pico_de_Loro,_Nasugbu,_Philippines.jpg";
 
 function Activites() {
   return (

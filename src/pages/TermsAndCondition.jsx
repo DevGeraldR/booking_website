@@ -49,7 +49,7 @@ function TermsAndCondition() {
           <h2 className="text-lg">3. Order process</h2>
 
           <div className="px-10">
-            <p>
+            <article>
               (a) The advertising of bookings on our website constitutes an
               “invitation to treat” rather than a contractual offer. <br />
               (b) No contract will come into force between you and MPPMNGPL
@@ -88,7 +88,7 @@ function TermsAndCondition() {
               your scheduled visit. Anyone not listed in our system will be
               denied entry.
               <br />
-            </p>
+            </article>
           </div>
         </article>
         <article>
@@ -100,7 +100,7 @@ function TermsAndCondition() {
             Protected Areas. Fees are classified into two (2):
           </p>
           <div className="px-10">
-            <p>
+            <article>
               (a) Online fees <br />
               The website will be automatically charge two hundred (200) pesos
               per visitor inclusive of the following:
@@ -134,7 +134,7 @@ function TermsAndCondition() {
                   <br />
                 </p>
               </div>
-            </p>
+            </article>
           </div>
         </article>
         <article>
@@ -162,7 +162,7 @@ function TermsAndCondition() {
           <h2 className="text-lg">6. Cancellation of booking by us</h2>
           <p>We may cancel a booking under these terms and conditions:</p>
           <div className="px-10">
-            <p>
+            <article>
               (a)Any force majeure for which the park will close for safety
               reasons
               <br />
@@ -202,7 +202,7 @@ function TermsAndCondition() {
               will be entitled to a full refund of the price paid under that
               contract.
               <br />
-            </p>
+            </article>
           </div>
         </article>
         <article>
@@ -215,7 +215,7 @@ function TermsAndCondition() {
               (2) You may cancel a booking under these terms and conditions:
             </p>
             <div className="px-10">
-              <p>
+              <article>
                 Cancellations can be done only if it will be re-booked on a
                 different schedule, and only if it is:
                 <br />
@@ -227,7 +227,7 @@ function TermsAndCondition() {
                     <br />
                   </p>
                 </div>
-              </p>
+              </article>
             </div>
             <p>
               (3) Any cancellation with no re-book processed will be subject to

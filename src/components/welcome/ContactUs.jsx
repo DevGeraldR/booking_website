@@ -35,7 +35,7 @@ function ContactUs() {
             <li className="py-2 text-sm">(046) 419-2474</li>
             <li className="py-2 text-sm">(046) 509-0533</li>
             <li className="py-2 text-sm">Email Address:</li>
-            <li className="py-2 text-sm">mppmngl.picodeloro@gmail.com</li>
+            <li className="py-2 text-sm">mppmngpl.picodeloro@gmail.com</li>
             <li className="py-2 text-sm">penrocavite@yahoo.com</li>
           </ul>
         </div>

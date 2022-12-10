@@ -7,7 +7,7 @@ function AboutUs() {
         <div className="text-4xl">
           Welcome to
           <span className="pl-2 font-bold text-4xl text-[#4c9a2a]">
-            MPPMNGL
+            MPPMNGPL
           </span>
         </div>
         <div className="w-[100px] h-0.5 bg-green-900 my-5"></div>

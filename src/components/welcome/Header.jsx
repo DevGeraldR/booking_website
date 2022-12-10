@@ -14,10 +14,10 @@ const Header = () => {
   });
 
   return (
-    <header
+    <div
       className={`${
-        bg ? "bg-[#354a21] h-20 text-white" : "h-24 text-black"
-      } flex items-center fixed top-0 w-full z-10 transition-all duration-300`}
+        bg ? "bg-opacity-100 h-20 " : "h-24 bg-gray-800 bg-opacity-20"
+      } bg-[#354a21] text-white flex items-center fixed top-0 w-full z-10 transition-all duration-300`}
     >
       <div className="mx-5 lg:mx-20 h-full w-full flex items-center justify-between">
         <div className="lg:hidden">
@@ -30,7 +30,7 @@ const Header = () => {
           <Nav />
         </div>
       </div>
-    </header>
+    </div>
   );
 };
 
