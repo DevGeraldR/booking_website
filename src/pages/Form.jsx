@@ -8,7 +8,8 @@ import { Dialog, Transition } from "@headlessui/react";
 
 function Form() {
   const navigate = useNavigate();
-  const { visitors, setVisitors, selectedDate, selectedTime } = useGlobal();
+  const { visitors, setVisitors, selectedDate, selectedTime, setSelectedTime } =
+    useGlobal();
   const [visitorsNumber, setVisitorsNumber] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -70,13 +71,32 @@ function Form() {
           navigate("/terms_and_condition");
         }}
       >
-        <div className="text-blue-900 bg-white rounded shadow-lg p-1 px-1 md:p-2 mb-6">
-          {isLoading ? (
-            <span>Checking slot...</span>
-          ) : (
-            <span> Available slot: {10 - visitorsNumber}</span>
-          )}
+        <div className="flex flex-col md:flex-row gap-5 mb-6 w-full justify-center">
+          <div className="text-blue-900 bg-white rounded shadow-lg p-1 px-1 md:p-2">
+            <h1>
+              <span className="text-gray-400">Date:</span>{" "}
+              {selectedDate.toDate().toDateString()}
+            </h1>
+          </div>
+          <div className="text-blue-900 bg-white rounded shadow-lg p-1 px-1 md:p-2">
+            <h1>
+              {" "}
+              <span className="text-gray-400">Time:</span> {selectedTime}
+            </h1>
+          </div>
+          <div className="text-blue-900 bg-white rounded shadow-lg p-1 px-1 md:p-2">
+            {isLoading ? (
+              <span>Checking slot...</span>
+            ) : (
+              <h1>
+                {" "}
+                <span className="text-gray-400">Available slot:</span>{" "}
+                {10 - visitorsNumber}
+              </h1>
+            )}
+          </div>
         </div>
+
         {visitors.map((value, index) => {
           return (
             <div className="container max-w-screen-lg mx-auto" key={index}>
@@ -213,10 +233,11 @@ function Form() {
               type="button"
               className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               onClick={() => {
+                setSelectedTime("");
                 navigate("/book_schedule");
               }}
             >
-              Back
+              Book New Date
             </button>
             <button
               type="button"

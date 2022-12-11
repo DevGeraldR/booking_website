@@ -56,9 +56,9 @@ export default function ChooseDate() {
   }, [selectedDate]);
 
   return (
-    <div className="flex py-5 gap-5 items-center justify-center flex-col mx-auto h-full md:h-screen">
+    <div className="flex py-5 gap-5 items-center lg:divide-x sm:w-1/2 justify-center flex-col mx-auto h-full md:h-screen">
       <h1 className="text-green-500 text-2xl">Choose Date</h1>
-      <div className="flex gap-10 lg:divide-x sm:w-1/2 items-center lg:flex-row flex-col">
+      <div className="flex gap-10 items-center lg:flex-row flex-col">
         <div className="sm:w-96 sm:h-96 max-w-[270px]">
           <div className="flex justify-between items-center">
             <h1 className="select-none font-semibold">
@@ -136,12 +136,7 @@ export default function ChooseDate() {
             )}
           </div>
         </div>
-        <div
-          className="h-96 w-96 sm:px-5 max-w-[280px]"
-          onChange={(e) => {
-            setSelectedTime(e.target.value);
-          }}
-        >
+        <div className="h-96 w-96 sm:px-5 max-w-[280px]">
           <h1 className=" font-semibold">
             Available Schedule for {selectedDate.toDate().toDateString()}
           </h1>
@@ -155,7 +150,11 @@ export default function ChooseDate() {
                 scheduleTime.map((index) => {
                   return (
                     <div key={index.time} className="flex flex-row gap-5">
-                      <div>
+                      <div
+                        onChange={(e) => {
+                          setSelectedTime(e.target.value);
+                        }}
+                      >
                         <input type="radio" value={index.time} name="time" />
                         <span className="pl-2">{index.time}</span>
                       </div>
