@@ -118,9 +118,8 @@ export default function ChooseDate() {
                             ((date.date() === 21 || date.date() === 22) &&
                               date.month() === 11 &&
                               date.year() === 2022) ||
-                            (date.date() > 11 &&
-                              date.month() === 0 &&
-                              date.year() === 2023) // Until here
+                            (date.date() >= 12 && date.month() === 0) ||
+                            (date.month() >= 1 && date.year() >= 2023) // Until here
                             ? "text-green-500 font-bold"
                             : "text-gray-400"
                           : "text-gray-400",
@@ -160,9 +159,9 @@ export default function ChooseDate() {
               ((selectedDate.date() === 21 || selectedDate.date() === 22) &&
                 selectedDate.month() === 11 &&
                 selectedDate.year() === 2022) ||
-              (selectedDate.date() > 11 &&
-                selectedDate.month() === 0 &&
-                selectedDate.year() === 2023) ? (
+              (selectedDate.date() >= 12 &&
+                selectedDate.month() >= 0 &&
+                selectedDate.year() >= 2023) ? (
                 //Until Here
                 !isLoading ? (
                   scheduleTime.map((index) => {
