@@ -20,12 +20,12 @@ const Hero = () => {
         <img
           className="md:w-[95px] md:h-[95px] h-[65px] w-[65px] mb-4"
           src={logo1}
-          alt="logo"
+          alt=""
         />
         <img
           className="md:w-[125px] md:h-[125px] h-[93px] w-[93px]"
           src={logo2}
-          alt="logo"
+          alt=""
         />
       </div>
     </div>

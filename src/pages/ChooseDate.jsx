@@ -108,12 +108,21 @@ export default function ChooseDate() {
                     key={index}
                     className="p-2 text-center h-14 grid place-content-center text-sm border-t"
                   >
+                    {/*Green color dates available manage here */}
                     <h1
                       className={cn(
                         (date.day() > 2 || date.day() < 1) &&
                           date.diff(currentDate, "day") + 1 >= 7 &&
                           date.diff(currentDate, "day") + 1 <= 90
-                          ? "text-green-500 font-bold"
+                          ? // Start here
+                            ((date.date() === 21 || date.date() === 22) &&
+                              date.month() === 11 &&
+                              date.year() === 2022) ||
+                            (date.date() > 11 &&
+                              date.month() === 0 &&
+                              date.year() === 2023) // Until here
+                            ? "text-green-500 font-bold"
+                            : "text-gray-400"
                           : "text-gray-400",
                         today ? "bg-blue-600 text-white" : "",
 
@@ -146,24 +155,36 @@ export default function ChooseDate() {
               <div>Sorry no booking beetween monday and tuesday</div>
             ) : selectedDate.diff(currentDate, "day") + 1 >= 7 &&
               selectedDate.diff(currentDate, "day") + 1 <= 90 ? (
-              !isLoading ? (
-                scheduleTime.map((index) => {
-                  return (
-                    <div key={index.time} className="flex flex-row gap-5">
-                      <div
-                        onChange={(e) => {
-                          setSelectedTime(e.target.value);
-                        }}
-                      >
-                        <input type="radio" value={index.time} name="time" />
-                        <span className="pl-2">{index.time}</span>
+              // Add unavailable dates here
+              // Start here
+              ((selectedDate.date() === 21 || selectedDate.date() === 22) &&
+                selectedDate.month() === 11 &&
+                selectedDate.year() === 2022) ||
+              (selectedDate.date() > 11 &&
+                selectedDate.month() === 0 &&
+                selectedDate.year() === 2023) ? (
+                //Until Here
+                !isLoading ? (
+                  scheduleTime.map((index) => {
+                    return (
+                      <div key={index.time} className="flex flex-row gap-5">
+                        <div
+                          onChange={(e) => {
+                            setSelectedTime(e.target.value);
+                          }}
+                        >
+                          <input type="radio" value={index.time} name="time" />
+                          <span className="pl-2">{index.time}</span>
+                        </div>
+                        <p>{index.slot} slot</p>
                       </div>
-                      <p>{index.slot} slot</p>
-                    </div>
-                  );
-                })
+                    );
+                  })
+                ) : (
+                  <div>Please wait...</div>
+                )
               ) : (
-                <div>Please wait...</div>
+                <div>No booking avaible</div>
               )
             ) : (
               <div>
@@ -174,14 +195,8 @@ export default function ChooseDate() {
           </div>
           <button
             onClick={() => navigate("/input_information")}
-            disabled={
-              selectedDate.day() === 1 ||
-              selectedDate.day() === 2 ||
-              !selectedTime
-            }
+            disabled={!selectedTime}
             className={`${
-              selectedDate.day() === 1 ||
-              selectedDate.day() === 2 ||
               !selectedTime
                 ? "bg-gray-100 text-gray-900 hover:bg-gray-200 cursor-not-allowed"
                 : "bg-blue-100 text-blue-900 hover:bg-blue-200"

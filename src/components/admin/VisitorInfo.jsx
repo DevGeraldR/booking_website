@@ -60,7 +60,8 @@ function VisitorInfo() {
         <div className="my-5 w-full max-w-2xl bg-white p-5 rounded-xl shadow-lg">
           <h1>Transaction #: {visitor.transactionNumber}</h1>
           <h1>Date: {visitor.scheduledDate}</h1>
-          <h1 className="pb-2">Time: {visitor.scheduledTime}</h1>
+          <h1>Time: {visitor.scheduledTime}</h1>
+          <h1 className="pb-2">Total Price: {visitor.totalPrice}</h1>
           {visitor.visitorInfo.map((v, index) => {
             return (
               <div key={index}>

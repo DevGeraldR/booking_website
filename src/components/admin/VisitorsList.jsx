@@ -35,7 +35,7 @@ function VisitorsList({ visitors }) {
       <tbody>
         {visitors.length <= 0 ? (
           <tr>
-            <td className="text-center pt-5" colSpan="3">
+            <td className="text-center pt-5" colSpan="8">
               No visitors.
             </td>
           </tr>

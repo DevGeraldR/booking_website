@@ -11,7 +11,8 @@ import ReactToPrint from "react-to-print";
 
 function Reciept() {
   const randomId = useMemo(() => uuid(), []);
-  const { selectedTime, selectedDate, visitors, setVisitors } = useGlobal();
+  const { selectedTime, selectedDate, visitors, setVisitors, setSelectedTime } =
+    useGlobal();
   const transactionId = randomId.slice(0, 8);
   let total = 0;
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ function Reciept() {
   return (
     <>
       <div className="min-h-screen bg-gray-100">
-        <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 w-full">
+        <div className="sticky top-0 bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 w-full">
           <p className="font-bold">Save printed copy</p>
           <p>
             Make sure to save printed copy of the receipt as this will be the
@@ -314,6 +315,7 @@ function Reciept() {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => {
                         setIsSuccessfulOpen(false);
+                        setSelectedTime("");
                         navigate("/");
                       }}
                     >
