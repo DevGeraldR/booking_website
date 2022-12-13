@@ -24,6 +24,7 @@ export function AuthProvider({ children }) {
       address: "",
       email: "",
       age: "",
+      companySchoolOrg: "",
       contactNumber: "",
       citezenship: "Filipino",
     },

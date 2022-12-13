@@ -44,6 +44,7 @@ function Form() {
         address: "",
         email: "",
         age: "",
+        companySchoolOrg: "",
         contactNumber: "",
         citezenship: "Filipino",
       },
@@ -150,6 +151,22 @@ function Form() {
                           className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                           placeholder="Age"
                           value={value.age}
+                          onChange={(e) => {
+                            handleChange(index, e);
+                          }}
+                        />
+                      </div>
+
+                      <div className="md:col-span-5">
+                        <label>Compay/School/Org</label>
+                        <input
+                          type="text"
+                          name="companySchoolOrg"
+                          required
+                          id="companySchoolOrg"
+                          className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                          placeholder="Company/School/Org"
+                          value={value.companySchoolOrg}
                           onChange={(e) => {
                             handleChange(index, e);
                           }}

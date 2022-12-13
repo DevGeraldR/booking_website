@@ -6,14 +6,29 @@ function VisitorsList({ visitors }) {
     <table className="table w-full max-h-[500px]">
       <thead>
         <tr>
-          <th className="text-center px-1 py-2 bg-black text-white sticky top-0">
+          <th className="text-center px-2 py-2 bg-black text-white sticky top-0">
             #
           </th>
-          <th className="text-left px-1 py-2 bg-black text-white sticky top-0">
-            Visitors
+          <th className="text-left px-2 py-2 bg-black text-white sticky top-0">
+            Name
           </th>
-          <th className=" px-1 py-1 bg-black text-white sticky top-0">
-            Manage
+          <th className="text-left px-2 py-2 bg-black text-white sticky top-0">
+            Compaly/School/Org
+          </th>
+          <th className="text-left px-2 py-2 bg-black text-white sticky top-0">
+            Email Address
+          </th>
+          <th className="text-left px-2 py-2 bg-black text-white sticky top-0">
+            Contact #
+          </th>
+          <th className="text-left px-2 py-2 bg-black text-white sticky top-0">
+            Reserved Date
+          </th>
+          <th className="text-left px-2 py-2 bg-black text-white sticky top-0">
+            Reserved Time
+          </th>
+          <th className=" px-2 py-1 bg-black text-white sticky top-0">
+            Action
           </th>
         </tr>
       </thead>

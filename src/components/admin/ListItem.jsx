@@ -9,7 +9,7 @@ function ListItem({ visitor, index }) {
   const navigate = useNavigate();
 
   const handleClickRemove = async (tag) => {
-    const confirm = window.confirm("Are you sure you want to delete?");
+    const confirm = window.confirm("Are you sure you want to remove visitor?");
     if (confirm) {
       const userRef = doc(db, "visitors", tag);
       const timeRef = doc(
@@ -35,8 +35,13 @@ function ListItem({ visitor, index }) {
 
   return (
     <tr key={index} className="bg-white border-b border-b-black ">
-      <td className="text-center  px-1 py-2">{index + 1}</td>
-      <td className=" px-1 py-2">{visitor.visitorInfo[0].fullName}</td>
+      <td className="text-center px-2 py-2">{index + 1}</td>
+      <td className=" px-2 py-2">{visitor.visitorInfo[0]?.fullName}</td>
+      <td className=" px-2 py-2">{visitor.visitorInfo[0]?.companySchoolOrg}</td>
+      <td className=" px-2 py-2">{visitor.visitorInfo[0]?.email}</td>
+      <td className=" px-2 py-2">{visitor.visitorInfo[0]?.contactNumber}</td>
+      <td className=" px-2 py-2">{visitor.scheduledDate}</td>
+      <td className=" px-2 py-2">{visitor.scheduledTime}</td>
       <td className="text-center  px-1 py-2">
         <button
           className="text-black hover:text-gray-600"
@@ -45,13 +50,13 @@ function ListItem({ visitor, index }) {
             navigate("/admin/visitor_information");
           }}
         >
-          open
+          Full Details
         </button>
         <button
           className="text-red-600 pl-3 hover:text-red-900"
           onClick={() => handleClickRemove(visitor.transactionNumber)}
         >
-          delete
+          Remove
         </button>
       </td>
     </tr>

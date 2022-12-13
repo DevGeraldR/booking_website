@@ -62,6 +62,7 @@ function Reciept() {
       scheduledDate: selectedDate.toDate().toDateString(),
       scheduledTime: selectedTime,
       visitorInfo: visitors,
+      totalPrice: total,
     });
     setIsLoading(false);
     setVisitors([
@@ -70,6 +71,7 @@ function Reciept() {
         address: "",
         email: "",
         age: "",
+        companySchoolOrg: "",
         contactNumber: "",
         citezenship: "Filipino",
       },
