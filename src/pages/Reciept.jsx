@@ -45,6 +45,7 @@ function Reciept() {
 
     if (docSnap.exists()) {
       if (docSnap.data().visitorsNumber + visitors.length > 10) {
+        setIsLoading(false);
         setIsWarningOpen(true);
         return;
       }
@@ -52,6 +53,11 @@ function Reciept() {
         visitorsNumber: docSnap.data().visitorsNumber + visitors.length,
       });
     } else {
+      if (visitors.length > 10) {
+        setIsLoading(false);
+        setIsWarningOpen(true);
+        return;
+      }
       await setDoc(timeRef, {
         time: selectedTime,
         visitorsNumber: visitors.length,
@@ -66,17 +72,6 @@ function Reciept() {
       totalPrice: total,
     });
     setIsLoading(false);
-    setVisitors([
-      {
-        fullName: "",
-        address: "",
-        email: "",
-        age: "",
-        companySchoolOrg: "",
-        contactNumber: "",
-        citezenship: "Filipino",
-      },
-    ]);
     setIsSuccessfulOpen(true);
   };
 
@@ -270,6 +265,18 @@ function Reciept() {
           className="relative z-10"
           onClose={() => {
             setIsSuccessfulOpen(false);
+            setVisitors([
+              {
+                fullName: "",
+                address: "",
+                email: "",
+                age: "",
+                companySchoolOrg: "",
+                contactNumber: "",
+                citezenship: "Filipino",
+              },
+            ]);
+            setSelectedTime("");
             navigate("/");
           }}
         >
@@ -315,6 +322,17 @@ function Reciept() {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => {
                         setIsSuccessfulOpen(false);
+                        setVisitors([
+                          {
+                            fullName: "",
+                            address: "",
+                            email: "",
+                            age: "",
+                            companySchoolOrg: "",
+                            contactNumber: "",
+                            citezenship: "Filipino",
+                          },
+                        ]);
                         setSelectedTime("");
                         navigate("/");
                       }}
@@ -432,8 +450,7 @@ function Reciept() {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      The maximum slot per time is exceeded. Maybe it happens
-                      because someone book just a moment.
+                      The maximum slot per time is exceeded.
                     </p>
                   </div>
 

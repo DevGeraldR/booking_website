@@ -159,9 +159,8 @@ export default function ChooseDate() {
               ((selectedDate.date() === 21 || selectedDate.date() === 22) &&
                 selectedDate.month() === 11 &&
                 selectedDate.year() === 2022) ||
-              (selectedDate.date() >= 12 &&
-                selectedDate.month() >= 0 &&
-                selectedDate.year() >= 2023) ? (
+              (selectedDate.date() >= 12 && selectedDate.month() === 0) ||
+              (selectedDate.month() >= 1 && selectedDate.year() >= 2023) ? (
                 //Until Here
                 !isLoading ? (
                   scheduleTime.map((index) => {
