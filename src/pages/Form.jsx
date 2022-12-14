@@ -256,18 +256,20 @@ function Form() {
             >
               Book New Date
             </button>
-            <button
-              disabled={visitors.length >= 10}
-              type="button"
-              className={`${
-                visitors.length >= 10
-                  ? "bg-gray-200 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500 "
-                  : "bg-green-100 text-green-900 hover:bg-green-200 focus-visible:ring-green-500 "
-              } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`}
-              onClick={addInputField}
-            >
-              Add
-            </button>
+            {!isLoading && (
+              <button
+                disabled={visitorsNumber + visitors.length >= 10}
+                type="button"
+                className={`${
+                  visitorsNumber + visitors.length >= 10
+                    ? "bg-gray-200 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500 "
+                    : "bg-green-100 text-green-900 hover:bg-green-200 focus-visible:ring-green-500 "
+                } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`}
+                onClick={addInputField}
+              >
+                Add
+              </button>
+            )}
             <button
               type="submit"
               className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
