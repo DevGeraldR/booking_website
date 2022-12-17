@@ -114,14 +114,7 @@ export default function ChooseDate() {
                         (date.day() > 2 || date.day() < 1) &&
                           date.diff(currentDate, "day") + 1 >= 7 &&
                           date.diff(currentDate, "day") + 1 <= 90
-                          ? // Start here
-                            ((date.date() === 21 || date.date() === 22) &&
-                              date.month() === 11 &&
-                              date.year() === 2022) ||
-                            (date.date() >= 12 && date.month() === 0) ||
-                            (date.month() >= 1 && date.year() >= 2023) // Until here
-                            ? "text-green-500 font-bold"
-                            : "text-gray-400"
+                          ? "text-green-500 font-bold"
                           : "text-gray-400",
                         today ? "bg-blue-600 text-white" : "",
 
@@ -155,34 +148,24 @@ export default function ChooseDate() {
             ) : selectedDate.diff(currentDate, "day") + 1 >= 7 &&
               selectedDate.diff(currentDate, "day") + 1 <= 90 ? (
               // Add unavailable dates here
-              // Start here
-              ((selectedDate.date() === 21 || selectedDate.date() === 22) &&
-                selectedDate.month() === 11 &&
-                selectedDate.year() === 2022) ||
-              (selectedDate.date() >= 12 && selectedDate.month() === 0) ||
-              (selectedDate.month() >= 1 && selectedDate.year() >= 2023) ? (
-                //Until Here
-                !isLoading ? (
-                  scheduleTime.map((index) => {
-                    return (
-                      <div key={index.time} className="flex flex-row gap-5">
-                        <div
-                          onChange={(e) => {
-                            setSelectedTime(e.target.value);
-                          }}
-                        >
-                          <input type="radio" value={index.time} name="time" />
-                          <span className="pl-2">{index.time}</span>
-                        </div>
-                        <p>{index.slot} slot</p>
+              !isLoading ? (
+                scheduleTime.map((index) => {
+                  return (
+                    <div key={index.time} className="flex flex-row gap-5">
+                      <div
+                        onChange={(e) => {
+                          setSelectedTime(e.target.value);
+                        }}
+                      >
+                        <input type="radio" value={index.time} name="time" />
+                        <span className="pl-2">{index.time}</span>
                       </div>
-                    );
-                  })
-                ) : (
-                  <div>Please wait...</div>
-                )
+                      <p>{index.slot} slot</p>
+                    </div>
+                  );
+                })
               ) : (
-                <div>No booking avaible</div>
+                <div>Please wait...</div>
               )
             ) : (
               <div>
